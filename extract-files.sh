@@ -67,11 +67,6 @@ fi
 COMMON_BLOB_ROOT="$LINEAGE_ROOT"/vendor/"$VENDOR"/"$DEVICE_COMMON"/proprietary
 DEVICE_BLOB_ROOT="$LINEAGE_ROOT"/vendor/"$VENDOR"/"$DEVICE"/proprietary
 
-patchelf --replace-needed android.hardware.gnss@1.0.so android.hardware.gnss@1.0-v27.so $COMMON_BLOB_ROOT/vendor/lib64/vendor.qti.gnss@1.0_vendor.so
-patchelf --replace-needed android.hardware.gnss@1.0.so android.hardware.gnss@1.0-v27.so $COMMON_BLOB_ROOT/lib64/vendor.qti.gnss@1.0.so
-patchelf --replace-needed android.frameworks.sensorservice@1.0.so android.frameworks.sensorservice@1.0-v27.so $COMMON_BLOB_ROOT/vendor/bin/slim_daemon
-
-
 if [ "$DEVICE" = "mido" ]; then
     # Hax for cam configs
     sed -i "s|/system/etc/camera/|/vendor/etc/camera/|g" $COMMON_BLOB_ROOT/vendor/lib/libmmcamera2_sensor_modules.so
@@ -83,6 +78,11 @@ if [ "$DEVICE" = "tissot" ]; then
     patchelf --replace-needed libicuuc.so libicuuc-v27.so $DEVICE_BLOB_ROOT/lib/libMiCameraHal.so
     patchelf --replace-needed libminikin.so libminikin-v27.so $DEVICE_BLOB_ROOT/lib/libMiCameraHal.so
     patchelf --replace-needed libskia.so libskia-v27.so $DEVICE_BLOB_ROOT/lib/libMiCameraHal.so
+    patchelf --replace-needed vendor.qti.hardware.camera.device@1.0_vendor.so vendor.qti.hardware.camera.device@1.0.so $DEVICE_BLOB_ROOT/vendor/bin/hw/android.hardware.camera.provider@2.4-service
+    patchelf --replace-needed vendor.qti.hardware.camera.device@1.0_vendor.so vendor.qti.hardware.camera.device@1.0.so $DEVICE_BLOB_ROOT/vendor/lib/camera.device@1.0-impl.so
+    patchelf --replace-needed vendor.qti.hardware.camera.device@1.0_vendor.so vendor.qti.hardware.camera.device@1.0.so $DEVICE_BLOB_ROOT/vendor/lib/hw/android.hardware.camera.provider@2.4-impl.so
+    patchelf --replace-needed vendor.qti.hardware.camera.device@1.0_vendor.so vendor.qti.hardware.camera.device@1.0.so $DEVICE_BLOB_ROOT/vendor/lib64/camera.device@1.0-impl.so
+    patchelf --replace-needed vendor.qti.hardware.camera.device@1.0_vendor.so vendor.qti.hardware.camera.device@1.0.so $DEVICE_BLOB_ROOT/vendor/lib64/hw/android.hardware.camera.provider@2.4-impl.so
     patchelf --set-soname libicuuc-v27.so $DEVICE_BLOB_ROOT/lib/libicuuc-v27.so
     patchelf --set-soname libminikin-v27.so $DEVICE_BLOB_ROOT/lib/libminikin-v27.so
 fi

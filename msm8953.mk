@@ -298,7 +298,9 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     init.qcom.bt.sh \
-    init.qcom.post_boot.sh
+    init.qcom.post_boot.sh \
+    move_time_data.sh \
+    move_wifi_data.sh
 
 # RenderScript HAL
 PRODUCT_PACKAGES += \
@@ -306,6 +308,8 @@ PRODUCT_PACKAGES += \
 
 # RIL
 PRODUCT_PACKAGES += \
+    android.hardware.radio.config@1.0 \
+    android.hardware.secure_element@1.0 \
     librmnetctl \
     libcnefeatureconfig \
     libxml2 \
